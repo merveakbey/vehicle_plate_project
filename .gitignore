@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+.env
+*.pt
+*.pth
+*.onnx
+*.mp4
+runs/
