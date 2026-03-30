@@ -126,9 +126,13 @@ cd vehicle_plate_project
 python -m venv venv
 ```
 Windows:
+```bash
 venv\Scripts\activate
+```
 Linux / macOS:
+```bash
 source venv/bin/activate
+```
 3. Gerekli paketleri yükle
 ```bash
 pip install -r requirements.txt
