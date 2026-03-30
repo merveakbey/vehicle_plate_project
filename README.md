@@ -40,7 +40,7 @@ KKTS/
 ├── server.js             # Ana sunucu dosyası
 ├── package.json          # Proje bağımlılıkları
 └── package-lock.json
-
+'''
 
 Veritabanı İçeriği
 
