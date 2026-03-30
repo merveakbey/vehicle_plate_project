@@ -1,7 +1,7 @@
 
 # Vehicle Plate Project
 
-Bu proje, video akışı üzerinden **araç tespiti**, **plaka tespiti** ve **optik karakter tanıma (OCR)** işlemlerini bir araya getiren uçtan uca bir **Araç Plaka Tanıma (ANPR - Automatic Number Plate Recognition)** sistemidir.
+Bu proje, video akışı üzerinden **araç tespiti**, **araç takibi**, **plaka tespiti** ve **optik karakter tanıma (OCR)** işlemlerini bir araya getiren uçtan uca bir **Araç Plaka Tanıma (ANPR - Automatic Number Plate Recognition)** sistemidir.
 
 Proje kapsamında amaç; bir görüntü veya video içerisindeki araçları tespit etmek, araçlara ait plakaları bulmak, plaka bölgesini işleyerek okunabilir hale getirmek ve plaka metnini OCR ile tanımaktır. Sistem, hem masaüstü ortamında hem de gömülü yapay zekâ sistemlerine uyarlanabilecek şekilde geliştirilmeye uygundur.
 
@@ -26,7 +26,7 @@ Bu projenin temel amacı:
 - **Araç tespiti** için YOLO tabanlı model kullanımı
 - **Plaka tespiti** için ayrı dedektör desteği
 - **OCR entegrasyonu** ile plaka okuma
-- Video üzerinden kare kare işleme
+- **Araç takibi (tracking)** ile aynı aracı kareler boyunca izleme
 - Araç-plaka eşleştirme mantığı
 - Ön işleme adımları ile OCR başarısını artırma
 - Takip (tracking) ile aynı araca ait plaka bilgisini kararlı hale getirme
@@ -63,28 +63,26 @@ Sistem, video dosyasından veya canlı kamera akışından görüntü alır.
 ### 2. Araç Tespiti
 Her kare üzerinde araç nesneleri tespit edilir. Araçlara ait bounding box koordinatları çıkarılır.
 
-### 3. Plaka Tespiti
+### 3. Araç Takibi (Tracking)
+Tespit edilen araçlar, ardışık karelerde takip edilerek her araca bir kimlik atanır. Bu sayede aynı araç farklı karelerde yeniden eşleştirilebilir ve plaka bilgisi doğru araç üzerinde tutulabilir.
+
+### 4. Plaka Tespiti
 Tespit edilen araç bölgeleri veya tüm kare üzerinden plaka dedeksiyonu yapılır.
 
-### 4. Ön İşleme
-Plaka görüntüsü OCR doğruluğunu artırmak için işlenir. Bu aşamada örneğin:
-- gri tonlama,
-- büyütme,
-- filtreleme,
-- kontrast artırma,
-- CLAHE,
-- thresholding
+### 5. Araç-Plaka Eşleştirme
+Bulunan plaka bölgesi, ilgili araç kutusuyla ilişkilendirilir. Böylece okunan plaka bilgisinin hangi araca ait olduğu belirlenir.
 
-gibi işlemler uygulanabilir.
+### 6. Ön İşleme
+Plaka görüntüsü OCR doğruluğunu artırmak için işlenir.
 
-### 5. OCR ile Metin Okuma
+### 7. OCR ile Metin Okuma
 Ön işlenmiş plaka görüntüsü OCR modeline verilerek plaka metni okunur.
 
-### 6. Sonuçların Kararlı Hale Getirilmesi
-Takip ve geçmiş sonuçların saklanması ile aynı araca ait plaka tahmini daha güvenilir hale getirilir.
+### 8. Sonuçların Kararlı Hale Getirilmesi
+Tracking ve geçmiş OCR sonuçları birlikte değerlendirilerek aynı araca ait plaka sonucu daha güvenilir hale getirilir.
 
-### 7. Görselleştirme
-Araç kutusu, plaka kutusu ve okunan plaka bilgisi çıktı görüntüsüne çizdirilir.
+### 9. Görselleştirme
+Araç kutusu, takip kimliği, plaka kutusu ve okunan plaka bilgisi çıktı görüntüsüne çizdirilir.
 
 ---
 
@@ -161,7 +159,7 @@ Plaka OCR başarısı, görüntü kalitesine doğrudan bağlıdır. Bu nedenle p
 
 Bu yaklaşım özellikle düşük çözünürlüklü veya hareketli görüntülerde daha iyi sonuç alınmasına yardımcı olur.
 
-##Geliştirici
+## Geliştirici
 
 **Merve Akbey**
 
